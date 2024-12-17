@@ -40,6 +40,12 @@ INSTALLED_APPS = [
     'home',
     "myaccount",
     "post",
+    'messages',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'transactions',
+    
 ]
 
 MIDDLEWARE = [
