@@ -1,0 +1,96 @@
+Here's a proposed database schema for your rental website, which will be built using Django and React. The schema includes tables for **users**, **listings**, **reviews**, **transactions**, and **favorites**. 
+
+### 1. **Users Table**
+This table stores information about both landlords and tenants.
+
+| Field        | Type            | Description                                  |
+|--------------|-----------------|----------------------------------------------|
+| `user_id`    | Integer (PK)    | Unique identifier for the user.              |
+| `first_name` | String          | First name of the user.                      |
+| `last_name`  | String          | Last name of the user.                       |
+| `email`      | String (Unique) | Email address, used for login and notifications. |
+| `password`   | String          | Hashed password for authentication.          |
+| `role`       | Enum (Tenant, Landlord, Admin) | Role of the user (tenant, landlord, or admin). |
+| `phone`      | String          | User's contact number.                       |
+| `address`    | String          | User's address.                              |
+| `created_at` | DateTime        | Account creation date.                       |
+| `updated_at` | DateTime        | Last profile update date.                    |
+
+### 2. **Listings Table**
+This table stores information about rental properties listed by landlords.
+
+| Field            | Type              | Description                                   |
+|------------------|-------------------|-----------------------------------------------|
+| `listing_id`     | Integer (PK)      | Unique identifier for the listing.            |
+| `title`          | String            | Title or name of the property.                |
+| `description`    | Text              | Detailed description of the property.         |
+| `price`          | Decimal           | Rental price per month.                       |
+| `location`       | String            | Property location (could be in format "City, Country"). |
+| `address`        | String            | Full address of the property.                 |
+| `image_url`      | String            | URL or path to the image of the property.     |
+| `owner_id`       | Integer (FK)      | Reference to the landlord (user_id).          |
+| `available_from` | DateTime          | Date when the property becomes available.     |
+| `available_to`   | DateTime          | Date until the property is available.         |
+| `created_at`     | DateTime          | Date when the listing was created.            |
+| `updated_at`     | DateTime          | Last update date of the listing.              |
+
+### 3. **Transactions Table**
+This table tracks rental agreements between tenants and landlords.
+
+| Field           | Type             | Description                                   |
+|-----------------|------------------|-----------------------------------------------|
+| `transaction_id`| Integer (PK)     | Unique identifier for the transaction.        |
+| `tenant_id`     | Integer (FK)     | Reference to the tenant (user_id).            |
+| `listing_id`    | Integer (FK)     | Reference to the rented property (listing_id).|
+| `start_date`    | DateTime         | Start date of the rental agreement.           |
+| `end_date`      | DateTime         | End date of the rental agreement.             |
+| `total_amount`  | Decimal          | Total amount for the rental period.           |
+| `payment_status`| Enum (Paid, Pending, Failed) | Status of the payment.                  |
+| `payment_date`  | DateTime         | Date when the payment was made.               |
+| `created_at`    | DateTime         | Date when the transaction was created.        |
+
+### 4. **Reviews Table**
+This table stores reviews and ratings given by tenants or landlords.
+
+| Field           | Type             | Description                                   |
+|-----------------|------------------|-----------------------------------------------|
+| `review_id`     | Integer (PK)     | Unique identifier for the review.             |
+| `reviewer_id`   | Integer (FK)     | Reference to the user giving the review (user_id). |
+| `listing_id`    | Integer (FK)     | Reference to the property being reviewed (listing_id). |
+| `rating`        | Integer (1-5)    | Rating given by the reviewer.                 |
+| `comment`       | Text             | Text review by the user.                      |
+| `created_at`    | DateTime         | Date when the review was created.             |
+
+### 5. **Favorites Table**
+This table stores the listings that tenants mark as favorites.
+
+| Field           | Type             | Description                                   |
+|-----------------|------------------|-----------------------------------------------|
+| `favorite_id`   | Integer (PK)     | Unique identifier for the favorite entry.     |
+| `tenant_id`     | Integer (FK)     | Reference to the tenant (user_id).            |
+| `listing_id`    | Integer (FK)     | Reference to the favorite listing (listing_id). |
+| `created_at`    | DateTime         | Date when the listing was added to favorites.  |
+
+### 6. **Images Table (Optional)**
+If you plan to allow multiple images for each property listing, you can use this table.
+
+| Field           | Type             | Description                                   |
+|-----------------|------------------|-----------------------------------------------|
+| `image_id`      | Integer (PK)     | Unique identifier for the image.              |
+| `listing_id`    | Integer (FK)     | Reference to the property (listing_id).       |
+| `image_url`     | String           | URL or path to the image.                     |
+| `created_at`    | DateTime         | Date when the image was uploaded.             |
+
+### Relationships:
+
+- **Users ↔ Listings**: One-to-many (one user can have many listings).
+- **Listings ↔ Transactions**: One-to-many (one listing can have many transactions).
+- **Users ↔ Transactions**: One-to-many (one user can be involved in many transactions as either a tenant or landlord).
+- **Users ↔ Reviews**: One-to-many (one user can write many reviews).
+- **Listings ↔ Reviews**: One-to-many (one listing can have many reviews).
+- **Users ↔ Favorites**: One-to-many (one user can favorite many listings).
+- **Listings ↔ Images**: One-to-many (one listing can have many images).
+
+This schema is a starting point and can be adjusted based on your needs, such as adding more complex features like messaging between tenants and landlords or integration with a payment gateway.
+
+Would you like help with setting up the models in Django or any other part of the development?
