@@ -1,0 +1,18 @@
+# Rent Project
+
+## Project Structure
+
+```
+/home/priver/Projects/Rent/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── styles/
+│   └── utils/
+├── public/
+│   ├── images/
+│   └── index.html
+├── .gitignore
+├── package.json
+└── README.md
+```
