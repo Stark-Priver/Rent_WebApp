@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import User
+from myaccount.models import User
 
 class Listing(models.Model):
     title = models.CharField(max_length=200)
